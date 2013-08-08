@@ -213,7 +213,7 @@ void *os_kmap_sgptr(PSG psg)
 void os_kunmap_sgptr(void *ptr)
 {
 	if ((HPT_UPTR)ptr >= (HPT_UPTR)high_memory)
-		kunmap_atomic(ptr, HPT_KMAP_TYPE);
+		kunmap_atomic(ptr);
 }
 #else 
 void *os_kmap_sgptr(PSG psg) { return psg->addr._logical; }

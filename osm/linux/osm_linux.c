@@ -479,16 +479,16 @@ static inline void scsicmd_buf_put(struct scsi_cmnd *cmd, void *buf)
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,23)
 	struct scatterlist *sg;
 	sg = scsi_sglist(cmd);
-	kunmap_atomic((char *)buf - sg->offset, HPT_KMAP_TYPE);
+	kunmap_atomic((char *)buf - sg->offset);
 #else 
 
 	if (cmd->use_sg) {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,0)
-		kunmap_atomic((char *)buf - ((struct scatterlist *)cmd->request_buffer)->offset, HPT_KMAP_TYPE);
+		kunmap_atomic((char *)buf - ((struct scatterlist *)cmd->request_buffer)->offset);
 #elif LINUX_VERSION_CODE >= KERNEL_VERSION(2,4,18)
 		struct scatterlist *sg = (struct scatterlist *) cmd->request_buffer;
 		if (sg->page)
-			kunmap_atomic((char *)buf - sg->offset, HPT_KMAP_TYPE);
+			kunmap_atomic((char *)buf - sg->offset);
 #endif
 	}
 
